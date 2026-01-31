@@ -37,7 +37,7 @@ A dedicated dashboard for administrators to:
 Navigate to your Drupal project's `web/modules` directory and create the folder structure as shown below:
 `web/modules/custom/events_manager`
 
-![Folder Structure](screenshots\folder_structure.png)
+![Folder Structure](screenshots/folder_structure.png)
 
 ### Step 2: Add Module Files
 Place all the module files (`.info.yml`, `.module`, `src/`, etc.) into this directory.
@@ -49,7 +49,7 @@ You can enable the module using Drush or the Drupal Admin Interface.
 Open your terminal in the project root and run:
 ```bash
 ddev drush en events_manager -y
-
+```
 ---
 
 ## Screenshots of Execution
@@ -75,3 +75,85 @@ ddev drush en events_manager -y
 ### 6. Admin Management: Export Data
 ![Folder Structure](screenshots/db_0.png)
 ![Folder Structure](screenshots/db_1.png)
+
+## 🗄️ Database Schema
+
+### `event_registration_event`
+Stores events created by administrators.
+
+**Fields:**
+- `event_name`
+- `category`
+- `event_date`
+- `reg_start_date`
+- `reg_end_date`
+- `created` (timestamp)
+
+---
+
+### `event_registration_entry`
+Stores user registrations for events.
+
+**Fields:**
+- `event_id` (Foreign Key referencing `event_registration_event`)
+- `full_name`
+- `email`
+- `college`
+- `department`
+- `created` (timestamp)
+
+**Constraints:**
+- Unique index on **(`email`, `event_id`)** to prevent duplicate registrations.
+
+---
+
+## ✅ Validation Rules
+
+The registration form enforces the following validations:
+- All required fields must be filled.
+- Text fields do not allow special characters.
+- Email addresses are validated for correct format.
+- Duplicate registrations for the same event are prevented.
+- Registrations are allowed only within the configured registration period.
+
+---
+
+## ⚡ AJAX Functionality
+
+**User Registration Form:**
+- Dynamic filtering in the order:  
+  **Category → Event Date → Event Name**
+
+**Admin Dashboard:**
+- Filter registrations by **Event Date → Event Name**
+- Registration list updates dynamically using AJAX.
+
+---
+
+## ✉️ Email Notifications
+
+Email notifications are implemented using the **Drupal Mail API** (`hook_mail`).
+
+**Emails sent:**
+- Registration confirmation email to the user.
+- Optional notification email to the administrator.
+
+**Configuration:**
+- Admin notification email is configurable via the **Drupal Config API**.
+
+---
+
+## 🔐 Permissions
+
+- Custom permission: **View event registrations**
+- Restricts access to the admin dashboard and registration listings.
+
+---
+
+## 🛠️ Technical Standards
+
+- Compatible with **Drupal 10.x**
+- Built using **Form API**, **Config API**, and **Schema API**
+- Follows **PSR-4 autoloading standards**
+- No contributed modules used
+- Adheres to **Drupal coding standard**
