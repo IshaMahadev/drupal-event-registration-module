@@ -1,0 +1,11 @@
+{
+  "name": "drupal/events_manager",
+  "type": "drupal-module",
+  "description": "Custom Event Registration Module",
+  "license": "GPL-2.0-or-later",
+  "autoload": {
+    "psr-4": {
+      "Drupal\\events_manager\\": "src/"
+    }
+  }
+}

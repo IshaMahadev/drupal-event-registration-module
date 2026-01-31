@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * Implements hook_mail().
+ */
+function events_manager_mail($key, &$message, $params) {
+  $options = [
+    'langcode' => $message['langcode'],
+  ];
+
+  switch ($key) {
+    case 'registration_confirmation':
+      $message['from'] = \Drupal::config('system.site')->get('mail');
+      $message['subject'] = t('Registration Confirmation: @event', ['@event' => $params['event_name']], $options);
+      $message['body'][] = t('Hello @name,', ['@name' => $params['name']], $options);
+      $message['body'][] = t('You have successfully registered for @event.', ['@event' => $params['event_name']], $options);
+      $message['body'][] = t('Details:', [], $options);
+      $message['body'][] = t('Date: @date', ['@date' => $params['event_date']], $options);
+      $message['body'][] = t('Category: @cat', ['@cat' => $params['category']], $options);
+      break;
+
+    case 'admin_notification':
+      $message['from'] = \Drupal::config('system.site')->get('mail');
+      $message['subject'] = t('New Registration for @event', ['@event' => $params['event_name']], $options);
+      $message['body'][] = t('A new user has registered.', [], $options);
+      $message['body'][] = t('Name: @name', ['@name' => $params['name']], $options);
+      $message['body'][] = t('Event: @event', ['@event' => $params['event_name']], $options);
+      $message['body'][] = t('Date: @date', ['@date' => $params['event_date']], $options);
+      break;
+  }
+}

@@ -1,0 +1,6 @@
+name: 'Events Manager'
+type: module
+description: 'A custom event registration system with AJAX forms and CSV export.'
+core_version_requirement: ^10 || ^11
+package: Custom
+configure: events_manager.settings

@@ -1,0 +1,31 @@
+events_manager.settings:
+  path: '/admin/config/services/events-manager/settings'
+  defaults:
+    _form: 'Drupal\events_manager\Form\EventSettingsForm'
+    _title: 'Events Manager Settings'
+  requirements:
+    _permission: 'administer events manager'
+
+events_manager.add_event:
+  path: '/admin/config/services/events-manager/add-event'
+  defaults:
+    _form: 'Drupal\events_manager\Form\EventAddForm'
+    _title: 'Add New Event'
+  requirements:
+    _permission: 'administer events manager'
+
+events_manager.listing:
+  path: '/admin/content/events-registrations'
+  defaults:
+    _form: 'Drupal\events_manager\Form\EventListingForm'
+    _title: 'Event Registrations'
+  requirements:
+    _permission: 'administer events manager'
+
+events_manager.register:
+  path: '/events/register'
+  defaults:
+    _form: 'Drupal\events_manager\Form\EventRegistrationForm'
+    _title: 'Event Registration'
+  requirements:
+    _access: 'TRUE'

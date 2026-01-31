@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function events_manager_schema() {
+  $schema['events_manager_event'] = [
+    'description' => 'Stores event configuration details.',
+    'fields' => [
+      'id' => ['type' => 'serial', 'not null' => TRUE],
+      'event_name' => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE],
+      'category' => ['type' => 'varchar', 'length' => 100, 'not null' => TRUE],
+      'event_date' => ['type' => 'varchar', 'length' => 20, 'not null' => TRUE],
+      'reg_start_date' => ['type' => 'varchar', 'length' => 20, 'not null' => TRUE],
+      'reg_end_date' => ['type' => 'varchar', 'length' => 20, 'not null' => TRUE],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  $schema['events_manager_registration'] = [
+    'description' => 'Stores user registrations.',
+    'fields' => [
+      'id' => ['type' => 'serial', 'not null' => TRUE],
+      'event_id' => ['type' => 'int', 'not null' => TRUE],
+      'full_name' => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE],
+      'email' => ['type' => 'varchar', 'length' => 254, 'not null' => TRUE],
+      'college' => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE],
+      'department' => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE],
+      'created' => ['type' => 'int', 'not null' => TRUE],
+    ],
+    'primary key' => ['id'],
+    'foreign keys' => [
+      'event_id' => ['table' => 'events_manager_event', 'columns' => ['event_id' => 'id']],
+    ],
+  ];
+
+  return $schema;
+}
